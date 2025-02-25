@@ -59,11 +59,6 @@ class WeatherService {
     };
   }
 
-  // TODO: Create buildGeocodeQuery method
-  // private buildGeocodeQuery(): string {
-  //   return `${this.baseURL}/geo/1.0/direct?q=${this.cityName}&limit=1&appid=${this.weatherApi}`;
-  // }
-
   // TODO: Create buildWeatherQuery method
   private buildWeatherQuery(coordinates: Coordinates): string {
     return `${this.baseURL}/data/2.5/weather?lat=${coordinates.lat}&lon=${coordinates.lon}&appid=${this.weatherApi}&units=imperial`;
@@ -102,6 +97,8 @@ class WeatherService {
   // TODO: Complete buildForecastArray method
   private buildForecastArray(currentWeather: Weather, weatherData: any[]) {
     const forecastArray: Weather[] = [currentWeather];
+    const addedDays = new Set<string>();
+
     weatherData.forEach((data: any) => {
       const weather = new Weather();
       weather.tempF = data.main.temp;
@@ -109,8 +106,14 @@ class WeatherService {
       weather.windSpeed = data.wind.speed;
       weather.icon = data.weather[0].icon;
       weather.iconDescription = data.weather[0].description;
-      weather.date = data.dt_txt;
-      forecastArray.push(weather);
+      const date = new Date(data.dt_txt);
+      const formattedDate = `${(date.getMonth() + 1).toString().padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')}-${date.getFullYear()}`;
+
+      if (!addedDays.has(formattedDate)) {
+        weather.date = formattedDate; // Set the date only if it's a new day
+        forecastArray.push(weather);
+        addedDays.add(formattedDate); // Mark this date as added
+      }
     });
     console.log(forecastArray);
     return forecastArray;
