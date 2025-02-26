@@ -21,7 +21,7 @@ This project is an interactive weather app that utilizes the OpenWeatherApi to a
 Download the file and extract data
 
 ## Usage
-Video Walkthrough: https://drive.google.com/file/d/17gjEOW8YIxivZ9kp1F5TpWt0ixe5pU5V/view?usp=sharing
+Video Walkthrough: https://drive.google.com/file/d/1VMNAXwTZCRl_6cVmYMq4p8Ddq3k8MQZw/view?usp=sharing 
 
 Open in an IDE (I used VS Code)
 Open one terminal in root folder, and one terminal in the server folder.
