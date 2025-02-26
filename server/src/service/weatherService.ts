@@ -76,10 +76,11 @@ class WeatherService {
     return await response.json();
   }
 
+  // Xpert AI help with fetchForecastData method
   private async fetchForecastData(coordinates: Coordinates): Promise<any[]> {
     const response = await fetch(`${this.baseURL}/data/2.5/forecast?lat=${coordinates.lat}&lon=${coordinates.lon}&appid=${this.weatherApi}&units=imperial`);
     const data = await response.json();
-    return data.list; // Assuming the forecast data is in the 'list' property
+    return data.list; 
   }
 
   // TODO: Build parseCurrentWeather method
@@ -97,6 +98,7 @@ class WeatherService {
   // TODO: Complete buildForecastArray method
   private buildForecastArray(currentWeather: Weather, weatherData: any[]) {
     const forecastArray: Weather[] = [currentWeather];
+    // Copilot help reformatting date
     const addedDays = new Set<string>();
 
     weatherData.forEach((data: any) => {
@@ -106,9 +108,12 @@ class WeatherService {
       weather.windSpeed = data.wind.speed;
       weather.icon = data.weather[0].icon;
       weather.iconDescription = data.weather[0].description;
+
+      // Copilot help reformatting date
       const date = new Date(data.dt_txt);
       const formattedDate = `${(date.getMonth() + 1).toString().padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')}-${date.getFullYear()}`;
 
+      // Check if current day was already posted
       if (!addedDays.has(formattedDate)) {
         weather.date = formattedDate; // Set the date only if it's a new day
         forecastArray.push(weather);
@@ -124,7 +129,6 @@ class WeatherService {
     const coordinates = await this.fetchAndDestructureLocationData(city);
     const currentWeatherData = await this.fetchWeatherData(coordinates);
     const currentWeather = this.parseCurrentWeather(currentWeatherData);
-
     const forecastData = await this.fetchForecastData(coordinates);
 
     return this.buildForecastArray(currentWeather, forecastData);

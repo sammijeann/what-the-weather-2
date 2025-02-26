@@ -1,4 +1,4 @@
-import { promises as fs } from 'fs';
+import { promises as fs } from 'fs'; // imported fs, wasnt sure if there was another way to read without it
 
 // TODO: Define a City class with name and id properties
 class City {
@@ -18,6 +18,7 @@ class HistoryService {
   // TODO: Define a read method that reads from the searchHistory.json file (db.json file in db folder)
   private async read() {
     try {
+      // utilized Xpert AI for using fs to read db.json file
       const data = await fs.readFile(filePath, 'utf8');
       return JSON.parse(data);
     } catch (error) {
@@ -29,6 +30,7 @@ class HistoryService {
   // // TODO: Define a write method that writes the updated cities array to the searchHistory.json file
   private async write(cities: City[]) {
     try {
+      // utilized Xpert AI for writing to db.json file
       await fs.writeFile(filePath, JSON.stringify(cities, null, 2));
     } catch (error) {
       console.error('Error writing file:', error);

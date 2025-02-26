@@ -7,8 +7,8 @@ import WeatherService from '../../service/weatherService.js';
 // TODO: POST Request with city name to retrieve weather data
 router.post('/', async (req, res) => {
   const city = req.body.cityName;
-  console.log(`Received city name: ${city}`);
   
+  // Copilot assistance in writing error handling
   if (!city) {
     return res.status(400).json({ error: 'City name is required' });
   }
@@ -19,7 +19,6 @@ router.post('/', async (req, res) => {
 
     // Save city to search history (assuming you have a method in HistoryService)
     await HistoryService.addCity(city);
-
 
     // Send the weather data as a response
     return res.json(weatherData);
@@ -43,6 +42,6 @@ router.get('/history', async (req, res) => {
 });
 
 // * BONUS TODO: DELETE city from search history
-router.delete('/history/:id', async (req, res) => {});
+//router.delete('/history/:id', async (req, res) => {});
 
 export default router;
